@@ -1,0 +1,16 @@
+.gitignore
+.vscode/
+.vscode-test/
+out/
+tsconfig.json
+vsc-extension-quickstart.md
+webpack.config.js
+**/*.vsix
+**/*.yaml
+**/*.md
+**/*.txt
+yarn.lock
+node_modules/
+!node_modules/typescript
+!node_modules/demo-tsserver-plugin
+!timestamp.json

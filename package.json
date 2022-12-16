@@ -1,0 +1,131 @@
+{
+  "name": "demo-typescript-features",
+  "sideEffects": false,
+  "untrustedWorkspaces": {
+    "supported": false,
+    "description": "Demo of some typescript features"
+  },
+  "displayName": "demo-ext",
+  "description": "Demo of some typescript features",
+  "version": "0.0.0",
+  "publisher": "NA",
+  "license": "private",
+  "engines": {
+    "vscode": "^1.65.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "logo.png",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/launcher",
+  "runtime": "./dist/runtime",
+  "contributes": {
+    "typescriptServerPlugins": [
+      {
+        "name": "demo-tsserver-plugin",
+        "enableForWorkspaceTypeScriptVersions": true
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "demo-panel",
+          "title": "Demo",
+          "icon": "sprocket.svg"
+        }
+      ]
+    },
+    "views": {
+      "demo-panel": [
+        {
+          "id": "type-introspection-ui",
+          "name": "Type Introspection"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "type-introspection-ui",
+        "contents": "In order to use Type Introspection, you must have a TypeScript project open"
+      }
+    ],
+    "commands": [
+      {
+        "command": "demo.get-typescript-introspection",
+        "title": "Get TypeScript Introspection"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Demo extension configuration",
+      "properties": {
+        "demo.enable-type-coverage-decorations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable in-editor highlighting of expressions which evaluate to any"
+        },
+        "demo.type-coverage-decoration-style": {
+          "default": {
+            "backgroundColor": "rgba(255, 0, 0, 0.13)",
+            "borderRadius": "4px"
+          },
+          "description": "The css-based style applied in-editor to expressions which evaluate to the any type. Supported styles can be found here: https://code.visualstudio.com/api/references/vscode-api#DecorationRenderOptions"
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorLangId == typescript || editorLangId == typescriptreact",
+          "command": "demo.get-typescript-introspection",
+          "group": "Demo"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "validate": "tsc -p .",
+    "compile": "babel src --out-dir out --extensions '.ts' --presets @babel/preset-typescript --plugins @babel/plugin-transform-modules-commonjs",
+    "build": "webpack --mode production && scripts/bundle.js",
+    "watch": "webpack --mode development --watch",
+    "test": "yarn compile && node ./out/test/runTests.js",
+    "lint": "prettier . && eslint ."
+  },
+  "devDependencies": {
+    "@babel/cli": "7.16.0",
+    "@babel/core": "7.16.0",
+    "@babel/plugin-transform-modules-commonjs": "7.16.0",
+    "@babel/preset-typescript": "7.16.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "@types/node": "14.14.41",
+    "@types/tape": "4.13.2",
+    "@types/vscode": "1.60.0",
+    "@types/webpack-env": "1.16.3",
+    "@types/ws": "8.2.1",
+    "@vscode/test-electron": "2.1.5",
+    "babel-loader": "8.2.3",
+    "eslint": "8.5.0",
+    "eslint-config-prettier": "6.3.0",
+    "eslint-config-react": "1.1.7",
+    "eslint-plugin-react": "7.14.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "2.5.1",
+    "source-map-support": "0.5.21",
+    "tape": "4.15.1",
+    "typescript": "4.6.2",
+    "vsce": "1.103.1",
+    "vscode-languageclient": "5.2.1",
+    "vscode-languageserver": "5.2.1",
+    "vscode-test": "1.2.0",
+    "webpack": "5.56.0",
+    "webpack-cli": "4.9.1",
+    "ws": "7.2.0"
+  },
+  "dependencies": {
+    "demo-tsserver-plugin": "file:./demo-tsserver-plugin"
+  }
+}
